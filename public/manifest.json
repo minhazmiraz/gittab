@@ -3,7 +3,13 @@
   "name": "gittab",
   "version": "0.1",
   "description": "Some Description",
-  "permissions": ["tabs", "storage", "https://www.github.com/*"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "identity",
+    "https://github.com/",
+    "https://*.github.com/*"
+  ],
   "background": {
     "scripts": ["static/js/background.js"],
     "persistent": false
