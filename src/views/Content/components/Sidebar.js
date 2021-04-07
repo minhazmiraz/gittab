@@ -52,11 +52,9 @@ const Sidebar = () => {
       >
         <Button onClick={handleDrawerOpen}>Close</Button>
         <Divider />
-        {sourceTree.tree && (
-          <FileTree repoData={repoData} sourceTree={sourceTree} />
-        )}
+        {sourceTree.tree && <FileTree />}
         {!sourceTree.tree && (
-          <Backdrop open="true">
+          <Backdrop open={!sourceTree.tree}>
             <CircularProgress color="inherit" />
           </Backdrop>
         )}

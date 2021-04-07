@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -8,8 +8,13 @@ import {
   getMaterialFolderIcon,
 } from "file-extension-icon-js";
 import { makeStyles, Typography } from "@material-ui/core";
+import { SidebarContext } from "../contexts/SidebarContext";
+import { TabsbarContext } from "../contexts/TabsbarContext";
 
-const FileTree = ({ repoData, sourceTree }) => {
+const FileTree = () => {
+  const { sourceTree, repoData } = useContext(SidebarContext);
+  const { tabsList, setTabsList, setActiveTab } = useContext(TabsbarContext);
+
   let treeData = sourceTree?.tree !== undefined ? sourceTree.tree : [];
 
   const data = {
@@ -32,6 +37,14 @@ const FileTree = ({ repoData, sourceTree }) => {
       flexGrow: 1,
     },
   }));
+
+  const handleFileClick = (node) => {
+    console.log(node);
+    if (node.child.length === 0) {
+      setTabsList({ array: tabsList.array.concat(node) });
+      setActiveTab(node.id);
+    }
+  };
 
   const treeIcon = (name, type) => {
     //type: 0 - file, 1 - folder, 2 - open folder
@@ -82,24 +95,7 @@ const FileTree = ({ repoData, sourceTree }) => {
       </div>
     );
 
-    return (
-      <TreeItem
-        label={
-          labelLink ? (
-            <a
-              href={labelLink}
-              style={{ textDecoration: "none", color: "inherit" }}
-              data-pjax="#repo-content-pjax-container"
-            >
-              {labelDiv}
-            </a>
-          ) : (
-            labelDiv
-          )
-        }
-        {...other}
-      />
-    );
+    return <TreeItem label={labelDiv} {...other} />;
   }
 
   console.log("FileTree");
@@ -126,6 +122,7 @@ const FileTree = ({ repoData, sourceTree }) => {
             nodes.path
           : ""
       }
+      onClick={() => handleFileClick(nodes)}
     >
       {Array.isArray(nodes.child) && nodes.child.length
         ? nodes.child.map((node) => renderTree(node))

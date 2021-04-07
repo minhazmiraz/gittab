@@ -1,15 +1,15 @@
 import SidebarContextProvider from "../contexts/SidebarContext";
 import TabsbarContextProvider from "../contexts/TabsbarContext";
-import Sidebar from "./Sidebar";
+import Tabsbar from "./Tabsbar";
 
-const SidebarApp = () => {
+const TabsbarApp = () => {
   return (
     <SidebarContextProvider>
       <TabsbarContextProvider>
-        <Sidebar />
+        <Tabsbar />
       </TabsbarContextProvider>
     </SidebarContextProvider>
   );
 };
 
-export default SidebarApp;
+export default TabsbarApp;
