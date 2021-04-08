@@ -9,6 +9,12 @@ let divRoot = document.createElement("div");
 divRoot.setAttribute("id", "gittab-sidebar");
 body.insertBefore(divRoot, body.firstElementChild);
 
+//Tabsbar injection
+let target = document.querySelector("#repo-content-pjax-container");
+let divChild = document.createElement("div");
+divChild.setAttribute("id", "gittab-tab");
+target.parentElement.insertBefore(divChild, target);
+
 ReactDOM.render(
   <React.StrictMode>
     <SidebarApp />
@@ -16,12 +22,10 @@ ReactDOM.render(
   document.getElementById("gittab-sidebar")
 );
 
-//Tabsbar injection
-let target = document.querySelector("#repo-content-pjax-container");
-let divChild = document.createElement("div");
-divChild.setAttribute("id", "gittab-tab");
+//Todo: code formation
 
-if (
+/* if (
+  false &&
   target.querySelector("#blob-path") &&
   target.querySelector("#blob-more-options-details") &&
   target.querySelector(" #blob-path").parentElement ===
@@ -41,9 +45,9 @@ ReactDOM.render(
     <TabsbarApp />
   </React.StrictMode>,
   document.getElementById("gittab-tab")
-);
+); */
 
-let observer = new MutationObserver((mutations) => {
+/* let observer = new MutationObserver((mutations) => {
   console.log("new mutations array");
   let flag = 0;
   for (let idxA = 0; idxA < mutations.length; idxA++) {
@@ -95,3 +99,4 @@ var config = {
 
 // pass in the target node, as well as the observer options
 observer.observe(target, config);
+ */

@@ -39,9 +39,10 @@ const FileTree = () => {
   }));
 
   const handleFileClick = (node) => {
+    //TODO: duplicate checking
     console.log(node);
     if (node.child.length === 0) {
-      setTabsList({ array: tabsList.array.concat(node) });
+      setTabsList({ ...tabsList, array: tabsList.array.concat(node) });
       setActiveTab(node.id);
     }
   };
@@ -95,7 +96,24 @@ const FileTree = () => {
       </div>
     );
 
-    return <TreeItem label={labelDiv} {...other} />;
+    return (
+      <TreeItem
+        label={
+          labelLink ? (
+            <a
+              href={labelLink}
+              style={{ textDecoration: "none", color: "inherit" }}
+              data-pjax="#repo-content-pjax-container"
+            >
+              {labelDiv}
+            </a>
+          ) : (
+            labelDiv
+          )
+        }
+        {...other}
+      />
+    );
   }
 
   console.log("FileTree");

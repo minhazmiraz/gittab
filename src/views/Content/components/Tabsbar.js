@@ -7,9 +7,8 @@ import { useContext, useState } from "react";
 import { SidebarContext } from "../contexts/SidebarContext";
 import { TabsbarContext } from "../contexts/TabsbarContext";
 
-const Tabsbar = () => {
-  const { repoData } = useContext(SidebarContext);
-  const { tabsList, activeTab, setActiveTab } = useContext(TabsbarContext);
+const Tabsbar = (props) => {
+  const { repoData, tabsList, activeTab, setActiveTab } = props;
 
   const AntTabs = withStyles({
     root: {
@@ -82,43 +81,47 @@ const Tabsbar = () => {
       default:
         break;
     }
+    return <img src={iconSrc} alt={iconAlt} width="15" />;
   };
 
-  console.log("tabslist: ", tabsList.array.length);
+  console.log("tabslist: ", tabsList);
 
   return (
     <div style={{ marginBottom: "10px" }}>
-      <AntTabs
-        value={activeTab}
-        onChange={handleChange}
-        aria-label="gittab-tabsbar"
-      >
-        {tabsList.array.map((tab) => (
-          <a
-            href={
-              "/" +
-              repoData["author"] +
-              "/" +
-              repoData["name"] +
-              "/blob/" +
-              repoData["branch"] +
-              "/" +
-              tab.path
-            }
-            style={{ textDecoration: "none", color: "inherit" }}
-            data-pjax="#repo-content-pjax-container"
-          >
+      {tabsList.array.length > 0 && (
+        <AntTabs
+          value={activeTab}
+          onChange={handleChange}
+          aria-label="gittab-tabsbar"
+        >
+          {tabsList.array.map((tab) => (
             <AntTab
-              id={"gittab-tabid-" + tab.id}
               key={tab.id}
               value={tab.id}
-              label={tab.name}
+              label={
+                //Todo: Link should be whole tab
+                <a
+                  href={
+                    "/" +
+                    repoData["author"] +
+                    "/" +
+                    repoData["name"] +
+                    "/blob/" +
+                    repoData["branch"] +
+                    "/" +
+                    tab.path
+                  }
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  data-pjax="#repo-content-pjax-container"
+                >
+                  {tab.name}
+                </a>
+              }
               icon={treeIcon(tab.name, 0)}
             />
-          </a>
-        ))}
-      </AntTabs>
-      {document.getElementById("gittab-tabid-" + { activeTab })?.click()}
+          ))}
+        </AntTabs>
+      )}
     </div>
   );
 };

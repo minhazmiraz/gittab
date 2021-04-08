@@ -7,9 +7,12 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { GitHub } from "@material-ui/icons";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { SidebarContext } from "../contexts/SidebarContext";
 import FileTree from "./FileTree";
+import Tabsbar from "./Tabsbar";
+import ReactDOM from "react-dom";
+import { TabsbarContext } from "../contexts/TabsbarContext";
 
 const Sidebar = () => {
   const {
@@ -22,6 +25,9 @@ const Sidebar = () => {
     getSource,
     setGetSource,
   } = useContext(SidebarContext);
+  const { tabsList, setTabsList, activeTab, setActiveTab } = useContext(
+    TabsbarContext
+  );
 
   const handleDrawerOpen = () => {
     if (sidebarData.drawerOpen) {
@@ -38,6 +44,22 @@ const Sidebar = () => {
   };
 
   console.log(repoData);
+
+  //Todo: Code formation
+  ReactDOM.render(
+    <React.StrictMode>
+      <Tabsbar
+        repoData={repoData}
+        tabsList={tabsList}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+    </React.StrictMode>,
+    document.getElementById("gittab-tab")
+  );
+
+  //Todo: multiple tab exist and click on another file from github directory view causes crash
+  //Todo: duplicate tab click in sidebar causes reload
   return (
     <div className="sidebar">
       <Drawer

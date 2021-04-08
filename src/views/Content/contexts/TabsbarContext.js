@@ -6,7 +6,7 @@ const TabsbarContextProvider = (props) => {
   const [tabsList, setTabsList] = useState({ array: [] });
   const [activeTab, setActiveTab] = useState(false);
 
-  console.log(tabsList.array.length);
+  console.log(tabsList);
   console.log(activeTab);
 
   return (
