@@ -1,4 +1,4 @@
-import { Tab, Tabs, withStyles } from "@material-ui/core";
+import { Link, Tab, Tabs, withStyles } from "@material-ui/core";
 import {
   getMaterialFileIcon,
   getMaterialFolderIcon,
@@ -18,7 +18,7 @@ const Tabsbar = (props) => {
       border: "1px solid #d9dadc",
     },
     indicator: {
-      backgroundColor: "#1890ff",
+      backgroundColor: "#f2816b",
     },
   })(Tabs);
 
@@ -27,7 +27,7 @@ const Tabsbar = (props) => {
       textTransform: "none",
       minWidth: 72,
       fontWeight: theme.typography.fontWeightRegular,
-      marginRight: theme.spacing(4),
+      marginRight: theme.spacing(0.5),
       fontFamily: [
         "-apple-system",
         "BlinkMacSystemFont",
@@ -41,19 +41,25 @@ const Tabsbar = (props) => {
         '"Segoe UI Symbol"',
       ].join(","),
       "&:hover": {
-        color: "#40a9ff",
+        color: "#f2816b",
         opacity: 1,
       },
       "&$selected": {
-        background: "#f1f8ff",
-        color: "#1890ff",
+        background: "#fafbfc",
+        color: "#f2816b",
         fontWeight: theme.typography.fontWeightMedium,
       },
       "&:focus": {
-        color: "#40a9ff",
+        color: "#f2816b",
       },
     },
     selected: {},
+    wrapper: {
+      display: "inline",
+    },
+    labelIcon: {
+      minHeight: "0px",
+    },
   }))((props) => <Tab disableRipple {...props} />);
 
   const handleChange = (event, newValue) => {
@@ -81,7 +87,15 @@ const Tabsbar = (props) => {
       default:
         break;
     }
-    return <img src={iconSrc} alt={iconAlt} width="15" />;
+    return (
+      <img
+        src={iconSrc}
+        alt={iconAlt}
+        width="15"
+        height="15"
+        style={{ marginBottom: "-3px", marginRight: "5px" }}
+      />
+    );
   };
 
   console.log("tabslist: ", tabsList);
@@ -93,31 +107,28 @@ const Tabsbar = (props) => {
           value={activeTab}
           onChange={handleChange}
           aria-label="gittab-tabsbar"
+          variant="scrollable"
+          scrollButtons="off"
         >
           {tabsList.array.map((tab) => (
             <AntTab
               key={tab.id}
               value={tab.id}
-              label={
-                //Todo: Link should be whole tab
-                <a
-                  href={
-                    "/" +
-                    repoData["author"] +
-                    "/" +
-                    repoData["name"] +
-                    "/blob/" +
-                    repoData["branch"] +
-                    "/" +
-                    tab.path
-                  }
-                  style={{ textDecoration: "none", color: "inherit" }}
-                  data-pjax="#repo-content-pjax-container"
-                >
-                  {tab.name}
-                </a>
-              }
+              component={Link}
               icon={treeIcon(tab.name, 0)}
+              label={tab.name}
+              href={
+                "/" +
+                repoData["author"] +
+                "/" +
+                repoData["name"] +
+                "/blob/" +
+                repoData["branch"] +
+                "/" +
+                tab.path
+              }
+              style={{ textDecoration: "none" }}
+              data-pjax="#repo-content-pjax-container"
             />
           ))}
         </AntTabs>

@@ -42,7 +42,9 @@ const FileTree = () => {
     //TODO: duplicate checking
     console.log(node);
     if (node.child.length === 0) {
-      setTabsList({ ...tabsList, array: tabsList.array.concat(node) });
+      if (tabsList.array.findIndex((o) => o.id === node.id) < 0) {
+        setTabsList({ ...tabsList, array: tabsList.array.concat(node) });
+      }
       setActiveTab(node.id);
     }
   };
