@@ -3,9 +3,6 @@ import {
   getMaterialFileIcon,
   getMaterialFolderIcon,
 } from "file-extension-icon-js";
-import { useContext, useState } from "react";
-import { SidebarContext } from "../contexts/SidebarContext";
-import { TabsbarContext } from "../contexts/TabsbarContext";
 
 const Tabsbar = (props) => {
   const { repoData, tabsList, activeTab, setActiveTab } = props;

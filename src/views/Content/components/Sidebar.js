@@ -10,24 +10,16 @@ import { GitHub } from "@material-ui/icons";
 import React, { useContext } from "react";
 import { SidebarContext } from "../contexts/SidebarContext";
 import FileTree from "./FileTree";
-import Tabsbar from "./Tabsbar";
-import ReactDOM from "react-dom";
-import { TabsbarContext } from "../contexts/TabsbarContext";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const {
     repoData,
-    setRepoData,
     sidebarData,
     setSidebarData,
     sourceTree,
-    setSourceTree,
-    getSource,
     setGetSource,
-  } = useContext(SidebarContext);
-  const { tabsList, setTabsList, activeTab, setActiveTab } = useContext(
-    TabsbarContext
-  );
+  } = props;
+  console.log("props", props);
 
   const handleDrawerOpen = () => {
     if (sidebarData.drawerOpen) {
@@ -45,21 +37,6 @@ const Sidebar = () => {
 
   console.log(repoData);
 
-  //Todo: Code formation
-  ReactDOM.render(
-    <React.StrictMode>
-      <Tabsbar
-        repoData={repoData}
-        tabsList={tabsList}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
-    </React.StrictMode>,
-    document.getElementById("gittab-tab")
-  );
-
-  //Todo: multiple tab exist and click on another file from github directory view causes crash
-  //Todo: duplicate tab click in sidebar causes reload
   return (
     <div className="sidebar">
       <Drawer
@@ -74,7 +51,7 @@ const Sidebar = () => {
       >
         <Button onClick={handleDrawerOpen}>Close</Button>
         <Divider />
-        {sourceTree.tree && <FileTree />}
+        {sourceTree.tree && <FileTree {...props} />}
         {!sourceTree.tree && (
           <Backdrop open={!sourceTree.tree}>
             <CircularProgress color="inherit" />

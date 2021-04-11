@@ -90,6 +90,17 @@ const SidebarContextProvider = (props) => {
     return () => abortCtrl.abort();
   }, [getSource]);
 
+  console.log("sidebarContext: ", {
+    repoData,
+    setRepoData,
+    sidebarData,
+    setSidebarData,
+    sourceTree,
+    setSourceTree,
+    getSource,
+    setGetSource,
+  });
+
   return (
     <SidebarContext.Provider
       value={{

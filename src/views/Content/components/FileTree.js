@@ -8,12 +8,11 @@ import {
   getMaterialFolderIcon,
 } from "file-extension-icon-js";
 import { makeStyles, Typography } from "@material-ui/core";
-import { SidebarContext } from "../contexts/SidebarContext";
-import { TabsbarContext } from "../contexts/TabsbarContext";
 
-const FileTree = () => {
-  const { sourceTree, repoData } = useContext(SidebarContext);
-  const { tabsList, setTabsList, setActiveTab } = useContext(TabsbarContext);
+const FileTree = (props) => {
+  const { sourceTree, repoData, tabsList, setTabsList, setActiveTab } = props;
+
+  console.log("Filetree props: ", props);
 
   let treeData = sourceTree?.tree !== undefined ? sourceTree.tree : [];
 
@@ -39,7 +38,6 @@ const FileTree = () => {
   }));
 
   const handleFileClick = (node) => {
-    //TODO: duplicate checking
     console.log(node);
     if (node.child.length === 0) {
       if (tabsList.array.findIndex((o) => o.id === node.id) < 0) {
