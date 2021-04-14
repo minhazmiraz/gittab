@@ -5,10 +5,12 @@ import {
   Divider,
   Drawer,
   IconButton,
+  makeStyles,
 } from "@material-ui/core";
 import { GitHub } from "@material-ui/icons";
-import React, { useContext } from "react";
-import { SidebarContext } from "../contexts/SidebarContext";
+import React from "react";
+import Scrollbars from "react-custom-scrollbars";
+import Draggable from "react-draggable";
 import FileTree from "./FileTree";
 
 const Sidebar = (props) => {
@@ -19,7 +21,8 @@ const Sidebar = (props) => {
     sourceTree,
     setGetSource,
   } = props;
-  console.log("props", props);
+
+  console.log("sidebar props", props);
 
   const handleDrawerOpen = () => {
     if (sidebarData.drawerOpen) {
@@ -33,6 +36,14 @@ const Sidebar = (props) => {
       setGetSource(true);
     }
     setSidebarData({ ...sidebarData, drawerOpen: !sidebarData.drawerOpen });
+  };
+
+  const handleDrag = (e, ui) => {
+    const { x, y } = sidebarData.draggableIconPosition;
+    setSidebarData({
+      ...sidebarData,
+      draggableIconPosition: { x, y: y + ui.deltaY },
+    });
   };
 
   console.log(repoData);
@@ -51,7 +62,11 @@ const Sidebar = (props) => {
       >
         <Button onClick={handleDrawerOpen}>Close</Button>
         <Divider />
-        {sourceTree.tree && <FileTree {...props} />}
+        {sourceTree.tree && (
+          <Scrollbars autoHide>
+            <FileTree {...props} />
+          </Scrollbars>
+        )}
         {!sourceTree.tree && (
           <Backdrop open={!sourceTree.tree}>
             <CircularProgress color="inherit" />
@@ -60,17 +75,25 @@ const Sidebar = (props) => {
       </Drawer>
       {!sidebarData.drawerOpen &&
         Object.values(repoData).every((o) => o !== null && o !== undefined) && (
-          <div
-            style={{
-              position: "fixed",
-              top: "250px",
-              left: "-20px",
+          <Draggable
+            axis="y"
+            defaultPosition={{
+              x: sidebarData.draggableIconPosition.x,
+              y: sidebarData.draggableIconPosition.y,
             }}
+            bounds={{ top: 60, bottom: 560, left: 0, right: 0 }}
+            onDrag={handleDrag}
           >
-            <IconButton color="primary" onClick={handleDrawerOpen}>
-              <GitHub />
-            </IconButton>
-          </div>
+            <div
+              style={{
+                position: "fixed",
+              }}
+            >
+              <IconButton color="primary" onClick={handleDrawerOpen}>
+                <GitHub />
+              </IconButton>
+            </div>
+          </Draggable>
         )}
     </div>
   );

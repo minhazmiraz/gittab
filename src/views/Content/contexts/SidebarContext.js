@@ -11,7 +11,10 @@ const SidebarContextProvider = (props) => {
     sha: null,
   });
 
-  const [sidebarData, setSidebarData] = useState({ drawerOpen: false });
+  const [sidebarData, setSidebarData] = useState({
+    drawerOpen: false,
+    draggableIconPosition: { x: -20, y: 250 },
+  });
 
   const [sourceTree, setSourceTree] = useState({});
 
