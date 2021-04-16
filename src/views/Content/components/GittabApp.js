@@ -7,7 +7,6 @@ import Tabsbar from "./Tabsbar";
 
 const GittabApp = () => {
   const sidebarContextData = useContext(SidebarContext);
-
   const tabsbarContextData = useContext(TabsbarContext);
 
   const sidebarInject = () => {
@@ -18,7 +17,10 @@ const GittabApp = () => {
       body.insertBefore(divRoot, body.firstElementChild);
     }
 
-    if (!document.getElementById("gittab-sidebar")) return;
+    if (!document.getElementById("gittab-sidebar")) {
+      console.log("gittab-sidebar not pushed!!");
+      return;
+    }
 
     ReactDOM.render(
       <React.StrictMode>
@@ -30,13 +32,16 @@ const GittabApp = () => {
 
   const tabsbarInject = () => {
     if (!document.getElementById("gittab-tab")) {
-      let target = document.querySelector("#repo-content-pjax-container");
       let divChild = document.createElement("div");
       divChild.setAttribute("id", "gittab-tab");
-      target.parentElement.insertBefore(divChild, target);
+      let target = document.querySelector("main");
+      target.insertBefore(divChild, target.children[1]);
     }
 
-    if (!document.getElementById("gittab-tab")) return;
+    if (!document.getElementById("gittab-tab")) {
+      console.log("gittab-tab not pushed!!");
+      return;
+    }
 
     ReactDOM.render(
       <React.StrictMode>

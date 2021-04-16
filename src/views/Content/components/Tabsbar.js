@@ -95,10 +95,18 @@ const Tabsbar = (props) => {
     );
   };
 
+  const isSourcePage = () => {};
+
   console.log("tabslist: ", tabsList);
 
   return (
-    <div style={{ marginBottom: "10px" }}>
+    <div
+      style={{
+        marginBottom: "10px",
+        paddingLeft: "40px",
+        paddingRight: "40px",
+      }}
+    >
       {tabsList.array.length > 0 && (
         <AntTabs
           value={activeTab}
