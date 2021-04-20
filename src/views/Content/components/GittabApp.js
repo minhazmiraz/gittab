@@ -4,6 +4,7 @@ import { SidebarContext } from "../contexts/SidebarContext";
 import { TabsbarContext } from "../contexts/TabsbarContext";
 import Sidebar from "./Sidebar";
 import Tabsbar from "./Tabsbar";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 
 const GittabApp = () => {
   const sidebarContextData = useContext(SidebarContext);
@@ -50,6 +51,13 @@ const GittabApp = () => {
       document.getElementById("gittab-tab")
     );
   };
+
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      if (request.message === 'hello!') {
+        console.log(request.details);
+        tabsbarInject();
+      }
+  });
 
   return (
     <div>

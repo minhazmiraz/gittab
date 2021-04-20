@@ -5,6 +5,7 @@ import {
 } from "file-extension-icon-js";
 
 const Tabsbar = (props) => {
+  console.log(props);
   const { repoData, tabsList, activeTab, setActiveTab } = props;
 
   const AntTabs = withStyles({
@@ -95,7 +96,9 @@ const Tabsbar = (props) => {
     );
   };
 
-  const isSourcePage = () => {};
+  const isSourcePage = () => {
+    return window.location.href.indexOf("/blob/") >= 0;
+  }
 
   console.log("tabslist: ", tabsList);
 
@@ -107,7 +110,7 @@ const Tabsbar = (props) => {
         paddingRight: "40px",
       }}
     >
-      {tabsList.array.length > 0 && (
+      {isSourcePage() && tabsList.array.length > 0 && (
         <AntTabs
           value={activeTab}
           onChange={handleChange}

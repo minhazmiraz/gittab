@@ -2,11 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./views/Content/App";
 
-/* let body = document.getElementsByTagName("body")[0];
-let divRoot = document.createElement("div");
-divRoot.setAttribute("id", "gittab-sidebar");
-body.insertBefore(divRoot, body.firstElementChild); */
-
 let root = document.createElement("div");
 root.setAttribute("id", "gittab-root");
 document.getElementsByTagName("body")[0].appendChild(root);
@@ -18,7 +13,7 @@ ReactDOM.render(
   document.getElementById("gittab-root")
 );
 
-/* 
+/*
 
 let observer = new MutationObserver((mutations) => {
   console.log("new mutations");
